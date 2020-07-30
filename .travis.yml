@@ -1,0 +1,21 @@
+dist: xenial
+
+language: python
+
+cache: pip
+
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "nightly"
+
+matrix:
+  allow_failures:
+    - python: "nightly"
+
+install:
+  - pip install --no-cache-dir -r requirements.txt
+
+script:
+  - bash pyinstaller --onefile App.py
