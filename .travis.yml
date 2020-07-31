@@ -1,0 +1,29 @@
+language: python
+os:
+  - linux
+dist: bionic
+matrix:
+  include:
+    - python: "2.7"
+    - python: "3.6"
+    - python: "3.7"
+    - python: "3.8"
+    - python: "pypy2"
+    - python: "pypy3"
+install:
+  - pip install flake8 virtualenv pytest pyinstaller
+script:
+  - python -V
+  - echo "running flake"; flake8 --ignore=E501,W504 --exclude=tests/guinea-pigs;
+  - pyinstaller --onefile App.py
+before_deploy:
+  # Set up git user name and tag this commit
+  # - git config --local user.name "YOUR GIT USER NAME"
+  # - git config --local user.email "YOUR GIT USER EMAIL"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
