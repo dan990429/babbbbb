@@ -1,21 +1,33 @@
-pipeline {
-	agent none
-	stages {
-		stage('test') {
-			agent {
-				label 'linux'
-			}
-			steps {
-				sh 'echo hello_WORLD'
-			}
-		}
-		stage('win') {
-			agent { 
-				label 'windows'
-			}
-			steps {
-				bat 'echo HELLO_WORLD'
-			}
-		}
-	}
+pipeline{
+    agent any
+    stages{
+        stage("A"){
+            steps{
+                echo "========executing A========"
+                echo python -V
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
 }
