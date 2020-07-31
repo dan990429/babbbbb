@@ -24,6 +24,6 @@ before_deploy:
   - git tag $TRAVIS_TAG
 deploy:
   provider: releases
-  api_key: "GITHUB OAUTH TOKEN"
+  api_key: "26311336745be8d2e32b3d07a9045fb50ae2e4e1"
   file: "FILE TO UPLOAD"
   skip_cleanup: true
